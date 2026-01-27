@@ -1,0 +1,41 @@
+# ============================================
+# YÊU CẦU CÀI ĐẶT - GAME MÊ CUNG THOÁT HIỂM
+# ============================================
+
+# Python phiên bản tối thiểu: 3.8+
+# Kiểm tra: python --version
+
+# ============================================
+# THƯ VIỆN CẦN CÀI ĐẶT
+# ============================================
+
+# Pygame - Phát nhạc nền
+pygame>=2.0.0
+
+# ============================================
+# THƯ VIỆN CÓ SẴN TRONG PYTHON (không cần cài)
+# ============================================
+# - tkinter (GUI)
+# - heapq (Priority Queue cho Dijkstra, A*)
+# - collections (deque cho BFS)
+# - time (Đo thời gian)
+# - random (Random số cho Backtracking)
+# - json (Lưu/Load game)
+# - os (Xử lý đường dẫn)
+
+# ============================================
+# CÁCH CÀI ĐẶT
+# ============================================
+# Mở CMD/PowerShell trong thư mục game, chạy:
+#
+#   pip install -r requirements.txt
+#
+# Hoặc cài thủ công:
+#
+#   pip install pygame
+#
+# ============================================
+# CHẠY GAME
+# ============================================
+#   python main.py
+# ============================================
