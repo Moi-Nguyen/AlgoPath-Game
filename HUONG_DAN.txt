@@ -1,0 +1,278 @@
+"""
+📖 HƯỚNG DẪN SỬ DỤNG CHI TIẾT
+================================
+
+================================
+🔧 HƯỚNG DẪN CÀI ĐẶT
+================================
+
+BƯỚC 1: CÀI ĐẶT PYTHON
+-----------------------
+   • Tải Python 3.8+ từ: https://www.python.org/downloads/
+   • Khi cài đặt, QUAN TRỌNG: ✅ Tick "Add Python to PATH"
+   • Kiểm tra: mở CMD/PowerShell gõ: python --version
+
+BƯỚC 2: CÀI ĐẶT THƯ VIỆN
+-------------------------
+   Mở CMD/PowerShell trong thư mục game, chạy lệnh:
+   
+   pip install -r requirements.txt
+   
+   Hoặc cài thủ công:
+   pip install pygame
+   
+   (Tkinter đã có sẵn trong Python)
+
+BƯỚC 3: CHẠY GAME
+------------------
+   Cách 1 - Command Line:
+   • Mở CMD/PowerShell trong thư mục game
+   • Chạy: python main.py
+   
+   Cách 2 - Double Click:
+   • Click đúp vào file main.py
+   
+   Cách 3 - VS Code:
+   • Mở thư mục game bằng VS Code
+   • Mở file main.py
+   • Nhấn F5 hoặc nút Run
+
+XỬ LÝ LỖI CÀI ĐẶT:
+-------------------
+   ❌ Lỗi "python is not recognized":
+      → Cài lại Python và tick "Add to PATH"
+      → Hoặc dùng: py main.py thay vì python main.py
+   
+   ❌ Lỗi "No module named tkinter":
+      → Windows: Cài lại Python, tick "tcl/tk and IDLE"
+      → Linux: sudo apt-get install python3-tk
+      → macOS: brew install python-tk
+   
+   ❌ Lỗi "No module named pygame":
+      → Chạy: pip install pygame
+   
+   ❌ Lỗi âm thanh không phát:
+      → Đảm bảo file nhạc nằm trong thư mục music/
+      → Kiểm tra pygame đã cài: pip show pygame
+
+CẤU TRÚC THƯ MỤC:
+------------------
+   Game mê cung/
+   ├── main.py              ← File chạy chính
+   ├── requirements.txt     ← Danh sách thư viện
+   ├── game_stats.json      ← Lưu thống kê (tự tạo)
+   ├── algorithms/          ← Các thuật toán
+   │   ├── maze_generator.py
+   │   ├── bfs.py
+   │   ├── dijkstra.py
+   │   └── astar.py
+   ├── models/              ← Các model dữ liệu
+   │   ├── maze.py
+   │   ├── player.py
+   │   └── enemy.py
+   ├── ui/                  ← Giao diện
+   │   ├── main_window.py
+   │   ├── maze_view.py
+   │   └── debug_panel.py
+   └── music/               ← Nhạc nền
+       └── *.mp3
+
+================================
+🎯 CÁC CHỨC NĂNG CHÍNH
+================================
+
+1. SINH MÊ CUNG TỰ ĐỘNG
+------------------------
+   • Chọn kích thước: 11x11, 15x15, 21x21, 25x25, 31x31
+   • Nhấn "🎲 Tạo mê cung mới"
+   • Mê cung được tạo bằng thuật toán Backtracking
+   • Luôn đảm bảo có đường đi từ Start (🟢) đến Exit (🔴)
+
+2. TÌM ĐƯỜNG DI NGẮN NHẤT
+--------------------------
+   BFS (Breadth-First Search):
+   • Tìm kiếm theo chiều rộng
+   • Đảm bảo tìm được đường ngắn nhất
+   • Phù hợp khi chi phí các bước bằng nhau
+   • Độ phức tạp: O(V+E)
+   
+   Dijkstra (Thuật toán tham lam):
+   • Sử dụng Priority Queue (heap)
+   • Tối ưu cho đồ thị có trọng số
+   • Độ phức tạp: O((V+E) log V)
+   
+   A* (A-Star):
+   • Kết hợp Dijkstra và heuristic
+   • Nhanh nhất trong 3 thuật toán
+   • Sử dụng Manhattan Distance làm heuristic
+   • Độ phức tạp: O((V+E) log V) nhưng hiệu quả hơn
+
+3. DEBUG TỪNG BƯỚC
+------------------
+   Sau khi tìm đường:
+   
+   ▶️ Play:
+   • Chạy animation tự động
+   • Hiển thị từng bước thuật toán
+   • Xem ô đang duyệt, ô đã thăm, đường đi
+   
+   ⏸️ Pause:
+   • Tạm dừng animation
+   
+   ⏹️ Stop:
+   • Dừng và reset về đầu
+   
+   ◀️ Prev / Next ▶️:
+   • Xem từng bước một
+   • Chi tiết thông tin mỗi bước
+   
+   Tốc độ:
+   • Điều chỉnh bằng thanh trượt
+   • 100-2000ms mỗi bước
+
+4. CHƠI GAME TƯƠNG TÁC
+-----------------------
+   Nhấn "🚀 Bắt đầu trò chơi":
+   
+   Chọn độ khó:
+   • Rất dễ: AI di chuyển mỗi 4 bước của bạn (Win rate ~95%)
+   • Dễ: AI mỗi 3 bước (Win rate ~80%) ← KHUYÊN DÙNG
+   • Trung bình: AI mỗi 2 bước (Win rate ~60%)
+   • Khó: AI mỗi bước (Win rate ~20%) - Thử thách!
+   
+   Điều khiển:
+   • ↑ ↓ ← → : Di chuyển người chơi (🔵)
+   • AI tự động đuổi theo tỷ lệ đã chọn
+   
+   Vị trí:
+   • Player: Góc trái-trên (1, 1)
+   • Exit: Góc phải-dưới (19, 19)
+   • Enemy: Góc phải-trên (xa player!)
+   
+   Mục tiêu:
+   • Đến Exit (🔴) trước khi bị AI (🟡) bắt
+   
+   AI:
+   • Sử dụng BFS để truy đuổi
+   • Tự động tìm đường ngắn nhất đến người chơi
+   • Di chuyển theo tỷ lệ độ khó (delay 300ms)
+   
+   Chiến thuật:
+   • Tận dụng lợi thế tốc độ
+   • Đi đường ngắn nhất về Exit
+   • Quan sát countdown AI
+
+5. SO SÁNH THUẬT TOÁN
+----------------------
+   Nhấn "📈 So sánh tất cả thuật toán":
+   
+   Hiển thị bảng so sánh:
+   • Độ dài đường đi
+   • Số bước duyệt
+   • Thời gian chạy (ms)
+   • Số ô đã thăm
+   
+   Giúp hiểu rõ:
+   • Ưu điểm của từng thuật toán
+   • Tình huống nên dùng thuật toán nào
+
+================================
+🎨 GIAO DIỆN
+================================
+
+CỘT TRÁI (⚙️ CẤU HÌNH):
+• Tạo mê cung
+• Chọn thuật toán
+• Điều khiển debug
+• Bắt đầu game
+• So sánh thuật toán
+
+CỘT GIỮA (🗺️ MÊ CUNG):
+• Hiển thị mê cung
+• Người chơi, AI, đường đi
+• Các ô đã thăm
+• Animation trực quan
+
+CỘT PHẢI (🔍 DEBUG):
+• Thông tin thuật toán
+• Độ phức tạp
+• Chi tiết từng bước
+• Bảng so sánh
+
+================================
+🎓 PHÂN TÍCH THUẬT TOÁN
+================================
+
+BACKTRACKING (Sinh mê cung):
+✅ Ưu điểm:
+   • Tạo mê cung có đường duy nhất
+   • Đảm bảo mọi ô đều truy cập được
+   • Dễ hiểu và cài đặt
+   
+❌ Nhược điểm:
+   • Mê cung có xu hướng tuyến tính
+   • Không tối ưu cho mê cung phức tạp
+
+BFS:
+✅ Ưu điểm:
+   • Tìm đường ngắn nhất
+   • Đơn giản, dễ cài đặt
+   • Phù hợp khi chi phí bằng nhau
+   
+❌ Nhược điểm:
+   • Tốn bộ nhớ với đồ thị lớn
+   • Không tối ưu khi có trọng số
+   • Không dùng heuristic
+
+DIJKSTRA:
+✅ Ưu điểm:
+   • Tìm đường ngắn nhất chính xác
+   • Hiệu quả với trọng số không âm
+   • Phù hợp cho đồ thị lớn
+   
+❌ Nhược điểm:
+   • Chậm hơn BFS khi trọng số = 1
+   • Không dùng heuristic
+   • Phức tạp hơn BFS
+
+A*:
+✅ Ưu điểm:
+   • Nhanh nhất trong các thuật toán
+   • Vẫn đảm bảo đường ngắn nhất
+   • Sử dụng heuristic thông minh
+   • Tối ưu cho game và navigation
+   
+❌ Nhược điểm:
+   • Phụ thuộc heuristic tốt
+   • Phức tạp nhất
+   • Cần thêm bộ nhớ cho f_score
+
+================================
+💡 TIPS & TRICKS
+================================
+
+1. Bắt đầu với mê cung nhỏ (11x11) để hiểu thuật toán
+2. Xem debug từng bước trước khi chạy animation
+3. So sánh các thuật toán trên cùng một mê cung
+4. Chơi game để hiểu cách AI hoạt động
+5. Thử các kích thước khác nhau để thấy sự khác biệt
+
+================================
+🐛 XỬ LÝ LỖI
+================================
+
+Nếu gặp lỗi:
+1. Đảm bảo đã tạo mê cung trước khi tìm đường
+2. Đảm bảo Python >= 3.7
+3. Kiểm tra Tkinter đã cài đặt
+4. Chạy lại với: python main.py
+
+================================
+📞 HỖ TRỢ
+================================
+
+Dự án học tập - Phân tích và Thiết kế Giải thuật
+Mọi thắc mắc vui lòng liên hệ giảng viên hướng dẫn
+
+🎉 CHÚC BẠN HỌC TẬP VUI VẺ!
+"""
